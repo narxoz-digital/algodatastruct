@@ -1,76 +1,131 @@
-// import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 
-public class DynamicArray{
-    private int [] A;
-    private int n;
-    public DynamicArray(){
-        this.A = new int[4];
-        this.n = 0;
-    }
+class DynamicArray{
+    private int [] A; // capacity = A.length [0,0,0,0,0,0] = 5
+    private int size; // [4,5,1, 0, 0] size=3
 
-    public DynamicArray(int capacity){
-        if (capacity<=0) capacity = 4;
-        this.A = new int[capacity];
-        this.n = 0;
-    }
-
-    public int getCapacity(){
-        return A.length;
-    }
-
-    public int getSize(){
-        return n;
-    }
-
-    public void add(int x){
-        if (n<A.length){
-            A[n] = x;
-            n++;
-        } else{
-            // 1) make capacity = capacity + 1;
-            // 2) increase by factor of two, capacity = capacity*2;
+    @Override
+    public String toString() {
+        StringBuilder st = new StringBuilder();
+        st.append("[");
+        for (int i = 0; i < size-1; i++) {
+            st.append(A[i]+",");
         }
+        if (size>0) st.append(A[size-1]);
+        st.append("]");
+        return st.toString();
     }
 
-    public void remove(int index){
-        // remove element at index
-        // decrease capacity if necessary
+    public DynamicArray(){
+        this.A = new int[0];
+        this.size = 0;
     }
+
+    public DynamicArray(int size){
+        if (size<0) throw new RuntimeException("E ti che!");
+        this.A = new int[size];
+        this.size = size;
+    }
+
+    public void add(int item){
+        if (size == A.length){
+            if (size==0){
+                size = 1;
+                A = new int[1];
+                A[0] = item;
+            } else{
+                A = Arrays.copyOf(A,size*2);
+//                int []B = new int [size*2];
+//                for (int i = 0; i < A.length; i++) {
+//                    B[i] = A[i];
+//                }
+//                A = B;
+                A[size]=item; // size<A.length
+                size++;
+            }
+        } else{
+            A[size]=item; // size<A.length
+            size++;
+        }
+
+
+    }
+    public void add(int index,int item){
+        /*
+        Inserts the specified element at the specified position in this list.
+         Shifts the element currently at that position (if any) and
+          any subsequent elements to the right (adds one to their indices)
+         */
+    }
+    public void remove(int index){} // time O(1), O(n), O(logn)
+    public void removeFirst(int item){} // time
+    public void removeLast(int item){} // time
 
     public int get(int index){
-        if (index>=0 && index<n) return A[index];
-        else throw new ArrayIndexOutOfBoundsException("Che ti!");
+        if (index<0 || index >=size) throw new RuntimeException("Eeeeeee!");
+        return A[index];
     }
-
     public void set(int index, int item){
-        if (index>=0 && index<n) A[index] = item;
-        else throw new ArrayIndexOutOfBoundsException("Ti che!");
+
     }
+    public int size(){ return size; }
+    public int capacity(){ return A.length; }
 
     public static void main(String[] args) {
-        DynamicArray d = new DynamicArray(10);
-        // ArrayList<Integer> a = new ArrayList<Integer>(10);
-
-        d.add(7);
-        System.out.println(d.get(0));
-        d.set(0,5);
-        System.out.println(d.get(9));
-
-        System.out.println(d.getSize());
-        System.out.println(d.getCapacity());
-
+        // Vector<Integer> v = new Vector<>(); // thread safe
+        // ArrayList<Integer> a = new ArrayList<>();
+        // a.add(3,4);
+        DynamicArray d = new DynamicArray();
+        d.add(25);
+        System.out.println(d.size() + " "+ d.capacity()+" "+d);
+        d.add(26);
+        System.out.println(d.size() + " "+ d.capacity()+" "+d);
+        d.add(27);
+        System.out.println(d.size() + " "+ d.capacity()+" "+d);
+        d.add(28);
+        System.out.println(d.size() + " "+ d.capacity()+" "+d);
+        d.add(29);
+        System.out.println(d.size() + " "+ d.capacity()+" "+d);
     }
+
 }
 
-/* Dynamic array in C++
+
+/* C++ example:
+
+// Example program
 #include <iostream>
 #include <vector>
 
 using namespace std;
+
 int main()
 {
-  vector<int> v(10);
-  cout << v.capacity() << endl; // 10
-}
+  vector<int> v;
+  v.push_back(5);
+  v.push_back(6);
+  v.push_back(7);
+  v.push_back(8);
+  v.push_back(9);
+  v.push_back(10);
 
+  for(int i=0;i<v.size();i++) cout << v[i] << endl;
+
+  cout << "size = " <<  v.size() << endl;
+  cout << "capacity = " <<  v.capacity() << endl;
+}
 */
+
+/* output:
+5
+6
+7
+8
+9
+10
+size = 6
+capacity = 8
+ */
+
