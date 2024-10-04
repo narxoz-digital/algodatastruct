@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class ResizableArray{
+public class ResizableArray{
     private int [] A;
     private int size;
     public ResizableArray(){
@@ -75,9 +75,7 @@ class ResizableArray{
         return size;
     }
     public int capacity() { return A.length;}
-}
 
-public class Main{
     public static void main(String[] args) {
         ResizableArray A = new ResizableArray();
         System.out.println(A.size()+" "+A+" "+A.capacity());
@@ -106,10 +104,11 @@ public class Main{
         A.removeLast();
         A.removeLast();
         System.out.println(A.size()+" "+A+" "+A.capacity());
-
-
     }
+    
 }
+
+
 
 /*
 // Example program
