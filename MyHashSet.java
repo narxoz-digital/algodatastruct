@@ -1,53 +1,49 @@
+// Lab 7, Problem 1
 import java.util.ArrayList;
-import java.util.Arrays;
-
 public class MyHashSet {
-    public static void main(String[] args) {
-        MyHashSet s = new MyHashSet();
-        s.add(3234567); // 234567
-        s.add(1234567); // 234567
-        s.add(1234568); // 234568
-        s.add(1234000); // 234000
-        s.add(1234025); // 234025
-        System.out.println(Arrays.toString(s.toArray()));
+    int hash(int key){
+        return key%10000;
     }
 
-    ArrayList<Integer> [] bucket;
-    int size;
-    public MyHashSet(){
-        bucket = new ArrayList[1000000];
-        size = 0;
-    }
 
-    public void add(int x){
-        int hash = x%1000000;
-        if (bucket[hash]==null) bucket[hash] = new ArrayList<Integer>();
-        if (!bucket[hash].contains(x)){
-            bucket[hash].add(x);
-            size++;
+    ArrayList<Integer> [] key_bucket;
+    public MyHashSet() {
+        bucket = new ArrayList[10000];    
+    }
+    
+    public void add(int key) {
+        int index = hash(key);
+        if (bucket[index]==null){
+            bucket[index] = new ArrayList<Integer>();
+            bucket[index].add(key);
+        } else 
+        if (!bucket[index].contains(key))
+        {
+            bucket[index].add(key);
         }
     }
-
-    public void remove(int x){
-        int hash = x%1000000;
-        if (bucket[hash]==null) return;
-        int index = bucket[hash].indexOf(x);
-        if (index>=0) {
-            bucket[hash].remove(index);
-            size--;
+    
+    public void remove(int key) {
+        int index = hash(key);
+        if (bucket[index]==null) return;
+        int i = bucket[index].indexOf(key);
+        
+        if (i>=0){
+            bucket[index].remove(i);
         }
     }
+    
+    public boolean contains(int key) {
+        int index = hash(key);
+        return bucket[index]!=null && bucket[index].contains(key);
+    }
 
-    public int[] toArray(){
-        int [] array = new int[size];
-        int k = 0;
-        for(int i=0;i<1000000;i++){
-            if (bucket[i]!=null && !bucket[i].isEmpty()){
-                for (int j = 0; j < bucket[i].size(); j++) {
-                    array[k++] = bucket[i].get(j);
-                }
-            }
-        }
-        return array;
+    
+    public static void main(String[] args){
+        MyHashSet obj = new MyHashSet();
+        obj.add(key);
+        obj.remove(key);
+        boolean truefalse = obj.contains(key);
     }
 }
+
