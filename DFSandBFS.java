@@ -1,10 +1,10 @@
 // https://leetcode.com/problems/number-of-provinces/
-class Solution {
+class DFSandBFS {
     public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
         boolean [] pushed = new boolean[n];
 
-        Stack stack = new Stack(); // Queue
+        Stack<Integer> stack = new Stack<Integer>(); // Queue
         int k = 0;
         int p = 0;
         while(k<n){
@@ -21,7 +21,7 @@ class Solution {
                 k = k + 1;
 
                 for(int i=0;i<n;i++){
-                    if (isConnected[v][i]==true && !pushed[i]){
+                    if (isConnected[v][i]==1 && !pushed[i]){
                         stack.push(i);
                         pushed[i] = true;
                     }
